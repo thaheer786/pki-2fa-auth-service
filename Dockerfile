@@ -1,5 +1,6 @@
 # ---------- Builder ----------
 FROM python:3.11-slim AS builder
+ENV TZ=UTC
 WORKDIR /build
 WORKDIR /app
 
