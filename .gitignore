@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment
+.env
+
+# Seed must NOT be committed
+encrypted_seed.txt
+
+# IDE files
+.vscode/
+.idea/
