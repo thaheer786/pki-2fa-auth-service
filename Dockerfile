@@ -1,24 +1,22 @@
 # ---------- Builder ----------
 FROM python:3.11-slim AS builder
-ENV TZ=UTC
 WORKDIR /build
-WORKDIR /app
 
-ENV PYTHONPATH="/app"
-
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY app/requirements.txt ./requirements.txt
 
-RUN python3 -m venv /opt/venv && \
-    /opt/venv/bin/pip install --upgrade pip && \
-    /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
+RUN python3 -m venv /opt/venv \
+    && /opt/venv/bin/pip install --upgrade pip \
+    && /opt/venv/bin/pip install --no-cache-dir -r requirements.txt
 
 
 # ---------- Runtime ----------
 FROM python:3.11-slim
+
 WORKDIR /app
+ENV PYTHONPATH="/app" 
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends cron tzdata ca-certificates && \
@@ -27,12 +25,12 @@ RUN apt-get update && \
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Copy application directories (FULL FIX HERE)
-COPY ./app ./app
-COPY ./scripts ./scripts
-COPY ./cron/2fa-cron /etc/cron.d/2fa-cron
+# Copy application files
+COPY app ./app
+COPY scripts ./scripts
+COPY cron/2fa-cron /etc/cron.d/2fa-cron
 
-# Copy keys
+# Copy RSA keys
 COPY student_private.pem .
 COPY student_public.pem .
 COPY instructor_public.pem .
