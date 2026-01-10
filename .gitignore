@@ -6,7 +6,7 @@ __pycache__/
 # Environment
 .env
 
-# Seed must NOT be committed
+# Seed must NOT be committed 
 encrypted_seed.txt
 
 # IDE files
