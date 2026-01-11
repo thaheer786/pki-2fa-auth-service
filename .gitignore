@@ -4,7 +4,7 @@ __pycache__/
 *.pyd   
 
 # Environment 
-.env
+.env  
 
 # Seed must NOT be committed   
 encrypted_seed.txt 
