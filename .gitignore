@@ -8,7 +8,7 @@ __pycache__/
 
 # Seed must NOT be committed   
 encrypted_seed.txt  
-
+ 
 # IDE files
 .vscode/
 .idea/ 
